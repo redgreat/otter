@@ -35,6 +35,7 @@ import com.alibaba.citrus.service.pipeline.support.AbstractValve;
 import com.alibaba.citrus.service.uribroker.URIBrokerService;
 import com.alibaba.citrus.service.uribroker.uri.URIBroker;
 import com.alibaba.citrus.turbine.TurbineRunData;
+import com.alibaba.citrus.turbine.support.TurbineRunDataImpl;
 import com.alibaba.citrus.util.StringUtil;
 import com.alibaba.otter.manager.web.common.WebConstant;
 import com.alibaba.otter.manager.web.common.api.ApiAuthService;
@@ -108,6 +109,7 @@ public class AuthContextValve extends AbstractValve {
             redirect(pipelineContext, rundata, forbiddenLink);
         } else {
             if (null == user) {
+                /*  取消匿名用户登录 by @wangcw 2022-07-28 10:34:45
                 // 如果用户未登录，则判断访问连接的权限匹配集合：
                 // 1.如果有高于匿名权限，则跳转到登录页面；
                 // 2.如果集合中只包含匿名权限，则通过。
@@ -116,6 +118,14 @@ public class AuthContextValve extends AbstractValve {
                 } else {
                     pipelineContext.invokeNext();
                 }
+                */
+                
+                // 如果用户未登录，跳转到登录页面；
+                if (requestUrl.contains("login")){
+                    pipelineContext.invokeNext();
+                }else
+                    redirect(pipelineContext, new TurbineRunDataImpl(request), loginLink);
+                
             } else {
                 // 如果用户已经登录，则判断访问连接的权限匹配集合：
                 // 1.如果权限集合有等于（低于）用户权限，则通过；
