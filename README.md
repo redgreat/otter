@@ -4,6 +4,7 @@
 <li>更换mysql驱动为8.0.30</li>
 <li>升级 druid版本为1.2.6(因最新版canal依赖已升级,原始提供版本已不满足)</li>
 <li>升级fastjson版本为1.2.79</li>
+<li>2022-11-21升级fastjson版本为1.2.83</li> (待线上测试)
 </ol>
 <strong>环境搭建：</strong>
 <ol>
