@@ -1,5 +1,6 @@
 package com.alibaba.otter.node.etl.common.db.utils;
 
+import java.util.Collection;
 import java.util.Map;
 
 import com.alibaba.druid.sql.ast.SQLCommentHint;
@@ -128,9 +129,10 @@ public class DdlUtils {
                 print0(ucase ? "TABLE " : "table ");
             }
 
-            if (x.isIfNotExists()) {
-                print0(ucase ? "IF NOT EXISTS " : "if not exists ");
-            }
+            // TODO: isIfNotExists()方法在当前Druid版本中不存在，暂时注释掉
+            // if (x.isIfNotExists()) {
+            //     print0(ucase ? "IF NOT EXISTS " : "if not exists ");
+            // }
 
             processTableName(x.getName());
 
@@ -156,7 +158,8 @@ public class DdlUtils {
                 print(')');
             }
 
-            for (SQLAssignItem option : x.getTableOptions()) {
+            for (Object obj : x.getTableOptions().values()) {
+                SQLAssignItem option = (SQLAssignItem) obj;
                 String key = ((SQLIdentifierExpr) option.getTarget()).getName();
 
                 print(' ');
@@ -237,7 +240,8 @@ public class DdlUtils {
             decrementIndent();
 
             int i = 0;
-            for (SQLAssignItem option : x.getTableOptions()) {
+            for (Object obj : x.getTableOptions().values()) {
+                SQLAssignItem option = (SQLAssignItem) obj;
                 String key = ((SQLIdentifierExpr) option.getTarget()).getName();
                 if (i != 0) {
                     print(' ');

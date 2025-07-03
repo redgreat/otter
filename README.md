@@ -16,7 +16,7 @@
 <strong>打包：</strong>
 <ol>
 <li>进入$otter_home目录</li>
-<li>执行：mvn clean install -Dmaven.test.skip -Denv=release</li>
+<li>执行：mvn clean package -DskipTests -Denv=release</li>
 <li>发布包位置：$otter_home/target</li>
 </ol>
 <strong>线上升级：</strong>
